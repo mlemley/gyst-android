@@ -1,0 +1,49 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Gyst</string>
+    <string name="last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+
+    <!-- Create Account -->
+    <string name="create_gyst_account">Create Gyst Account</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="invalid_email">The email provided is invalid.</string>
+    <string name="account_creation_failure_message">Could not create account at this time. Please try again later.</string>
+    <string name="account_creation_conflict_failure_message">Email already registered with Gyst, Please request password reset.</string>
+
+    <!-- Create Profile -->
+    <string name="what_can_we_call_you">What can we call you?</string>
+    <string name="first_name_empty_error">First name is required.</string>
+    <string name="last_name_empty_error">Last name is required.</string>
+    <string name="password_rules_upper">A</string>
+    <string name="password_rules_lower">a</string>
+    <string name="password_rules_digits">#</string>
+    <string name="password_rules_special">%s</string>
+    <string name="password_rules_size">%s-%s</string>
+
+    <!-- Create Profile -->
+
+    <string name="login">Login</string>
+    <string name="account_login_invalid_credentials_message">Invalid email or password.</string>
+    <string name="account_login_failure_message">Could not create account at this time. Please try again later.</string>
+    <string name="login_title">Login to your account</string>
+
+    <!-- Login -->
+    <string name="account_login_biometric_failure_message">Could not login with biometrics, please login with username and password.</string>
+
+    <!-- BioMetrics -->
+    <string name="biometric_prompt_title">Biometric Authentication</string>
+    <string name="biometric_prompt_sub_title" />
+    <string name="biometric_prompt_description" />
+    <string name="biometric_prompt_negative_button_text" tools:ignore="ButtonCase">Cancel</string>
+    <string name="biometric_prompt_positive_button_text" tools:ignore="ButtonCase">Confirm</string>
+    <string name="biometric_auth_failure_message">Try finger to unlock.</string>
+    <string name="biometric_retry">Try Again</string>
+
+    <!-- BioMetrics Onboarding Permission -->
+    <string name="allow_biometric_login">Allow BioMetric Login</string>
+    <string name="enable_biometrics">Enable BioMetrics</string>
+
+</resources>

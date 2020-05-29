@@ -1,0 +1,120 @@
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+apply plugin: "com.adarshr.test-logger"
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+
+def _gystApiBaseRoute = System.getenv("GYST_API_BASE_ROUTE") ? System.getenv("GYST_API_BASE_ROUTE") : gystApiBaseRoute
+
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "app.gyst"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "GYST_API_BASE_ROUTE", "\"$_gystApiBaseRoute\"")
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+            all {
+                systemProperty "robolectric.logging.enabled", false
+            }
+        }
+        testlogger {
+            theme 'standard-parallel' // task level
+        }
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.jakewharton.threetenabp:threetenabp:$local_date_time_backport"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.google.android.material:material:$google_material_version"
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraint_version"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidx_lifecycle_version"
+
+    implementation "androidx.navigation:navigation-fragment:$androidx_navigation_version"
+    implementation "androidx.navigation:navigation-ui:$androidx_navigation_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$androidx_navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$androidx_navigation_version"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    debugImplementation 'com.idescout.sql:sqlscout-server:4.1'
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
+
+
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+
+
+    implementation "com.squareup.retrofit2:retrofit:2.8.1"
+    implementation "com.squareup.retrofit2:converter-gson:2.8.1"
+    implementation "com.squareup.okhttp3:okhttp:4.6.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.6.0"
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.6.0"
+
+    implementation 'br.com.simplepass:loading-button-android:2.2.0'
+
+
+    //Testing Dependencies
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5"
+    testImplementation "androidx.test:core:$androidx_test_core_version"
+    testImplementation "androidx.test.ext:junit:$androidx_test_ext_junit"
+    testImplementation "androidx.test.ext:truth:$androidx_test_core_version"
+    testImplementation "androidx.test:rules:$androidx_test_core_version"
+    testImplementation "androidx.test:runner:$androidx_test_core_version"
+    testImplementation "androidx.test:rules:$androidx_runner_version"
+    testImplementation "androidx.test:runner:$androidx_runner_version"
+
+    debugImplementation "androidx.fragment:fragment-testing:$androidx_fragment_testing_version"
+    testImplementation "androidx.test.espresso:espresso-core:$androidx_espresso"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "com.google.truth:truth:$truth_version"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "androidx.arch.core:core-testing:$androidx_arch_core_testing_version"
+    releaseImplementation 'com.idescout.sql:sqlscout-server-noop:4.1'
+
+}

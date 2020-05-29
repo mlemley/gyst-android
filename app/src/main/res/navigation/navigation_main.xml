@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/nav_splash_screen">
+
+    <fragment
+        android:id="@+id/nav_splash_screen"
+        android:name="app.gyst.ui.splash.SplashScreen"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_nav_splash_screen_to_nav_onboarding_create_account"
+            app:destination="@id/nav_onboarding_create_account"
+            app:popUpTo="@id/navigation_main"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_onboarding_create_account"
+        android:name="app.gyst.ui.onboarding.account.create.CreateAccountScreen"
+        android:label="@string/create_gyst_account"
+        tools:layout="@layout/fragment_onboarding_create_account">
+        <action
+            android:id="@+id/action_nav_onboarding_create_account_to_nav_introduction_screen"
+            app:destination="@id/nav_introduction_screen"
+            app:popUpTo="@id/navigation_main"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_login_screen"
+        android:label="@string/login_title"
+        android:name="app.gyst.ui.account.login.LoginScreen"
+        tools:layout="@layout/fragment_account_login" />
+    <fragment
+        android:id="@+id/nav_biometric_permission"
+        android:label=""
+        android:name="app.gyst.ui.account.login.BiometricPermissionScreen"
+        tools:layout="@layout/fragment_biometric_permission" />
+
+    <fragment
+        android:id="@+id/nav_introduction_screen"
+        android:label="@string/what_can_we_call_you"
+        android:name="app.gyst.ui.onboarding.account.profile.CreateProfileScreen"
+        tools:layout="@layout/fragment_onboarding_create_profile" />
+
+</navigation>

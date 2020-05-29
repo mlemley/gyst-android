@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/screen_padding">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_address_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:helperText="@string/email_address"
+        app:layout_constraintBottom_toTopOf="@id/password_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:helperText="@string/password"
+        app:layout_constraintBottom_toTopOf="@id/rules_upper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/email_address_layout"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/rules_upper"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/password_rules_upper"
+        android:textAppearance="@style/Gyst.Password.RuleAppearance"
+        app:layout_constraintBottom_toTopOf="@id/next"
+        app:layout_constraintEnd_toStartOf="@id/rules_lower"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password_layout"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".20" />
+
+    <TextView
+        android:id="@+id/rules_lower"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/password_rules_lower"
+        android:textAppearance="@style/Gyst.Password.RuleAppearance"
+        app:layout_constraintBottom_toBottomOf="@id/rules_upper"
+        app:layout_constraintEnd_toStartOf="@id/rules_digits"
+        app:layout_constraintStart_toEndOf="@id/rules_upper"
+        app:layout_constraintTop_toTopOf="@id/rules_upper"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".20"
+        tools:enabled="true" />
+
+    <TextView
+        android:id="@+id/rules_digits"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/password_rules_digits"
+        android:textAppearance="@style/Gyst.Password.RuleAppearance"
+        app:layout_constraintBottom_toBottomOf="@id/rules_upper"
+        app:layout_constraintEnd_toStartOf="@id/rules_special"
+        app:layout_constraintStart_toEndOf="@id/rules_lower"
+        app:layout_constraintTop_toTopOf="@id/rules_upper"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".20" />
+
+    <TextView
+        android:id="@+id/rules_special"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/password_rules_special"
+        android:textAppearance="@style/Gyst.Password.RuleAppearance"
+        app:layout_constraintBottom_toBottomOf="@id/rules_upper"
+        app:layout_constraintStart_toEndOf="@id/rules_digits"
+        app:layout_constraintTop_toTopOf="@id/rules_upper"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".20"
+        tools:text="!@#$%" />
+
+    <TextView
+        android:id="@+id/rules_length"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/password_rules_size"
+        android:textAppearance="@style/Gyst.Password.RuleAppearance"
+        app:layout_constraintBottom_toBottomOf="@id/rules_upper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rules_special"
+        app:layout_constraintTop_toTopOf="@id/rules_upper"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent=".20"
+        tools:text="8-20" />
+
+
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/next"
+        style="@style/Gyst.ProgressButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/next"
+        app:layout_constraintBottom_toTopOf="@id/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rules_upper" />
+
+    <Button
+        android:id="@+id/login"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/next" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
