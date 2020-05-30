@@ -29,7 +29,5 @@ val persistenceModule = module {
     // Expose DAO's
 
     factory { get<GystDatabase>().userDao }
-/*
     factory { get<GystDatabase>().userProfileDao }
- */
 }

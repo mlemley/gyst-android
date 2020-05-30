@@ -4,12 +4,14 @@ import androidx.room.Dao
 import androidx.room.Query
 import app.gyst.persistence.model.User
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.intellij.lang.annotations.Language
 
 
 @Dao
 @ExperimentalCoroutinesApi
 abstract class UserDao : BaseDao<User>() {
 
+    @Language("RoomSql")
     @Query(
         """
         select * from user order by datetime(lastSeen) desc limit 1 

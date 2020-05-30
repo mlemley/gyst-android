@@ -2,15 +2,19 @@ package app.gyst.repository
 
 import androidx.annotation.VisibleForTesting
 import app.gyst.client.model.LoginResponse
+import app.gyst.client.model.UserProfileResponse
 import app.gyst.persistence.dao.UserDao
+import app.gyst.persistence.dao.UserProfileDao
 import app.gyst.persistence.model.User
+import app.gyst.persistence.model.UserProfile
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.threeten.bp.Instant
 
 
 @ExperimentalCoroutinesApi
 class UserAccountRepository(
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val userProfileDao: UserProfileDao
 ) {
 
     val userAccount: User? get() = userDao.user()
@@ -25,7 +29,16 @@ class UserAccountRepository(
         userDao.update(user.copy(lastSeen = Instant.now()))
     }
 
+    suspend fun saveUserProfile(userProfileResponse: UserProfileResponse) {
+        userDao.byId(userProfileResponse.userId.toString())?.let {
+            userProfileDao.saveUserProfile(userProfileResponse.asUserProfileModel())
+        }
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun LoginResponse.asUserModel(): User = User(id, email, active, accessToken, createAt, updatedAt)
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun UserProfileResponse.asUserProfileModel(): UserProfile = UserProfile(id, userId, firstName, lastName, createAt, updatedAt)
 
 }

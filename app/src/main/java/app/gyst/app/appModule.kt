@@ -14,12 +14,12 @@ import app.gyst.ui.account.login.BiometricPermissionScreenViewModel
 import app.gyst.ui.account.login.LoginScreenViewModel
 import app.gyst.ui.financial.overview.FinancialOverviewViewModel
 import app.gyst.ui.onboarding.account.create.CreateAccountViewModel
-import app.gyst.ui.onboarding.account.profile.CreateProfileUseCase
 import app.gyst.ui.onboarding.account.profile.CreateProfileViewModel
 import app.gyst.ui.splash.SplashScreenViewModel
 import app.gyst.validation.PasswordRules
 import app.gyst.viewmodel.usecases.BiometricPermissionUseCase
 import app.gyst.viewmodel.usecases.account.CreateAccountUseCase
+import app.gyst.viewmodel.usecases.account.CreateProfileUseCase
 import app.gyst.viewmodel.usecases.account.LoginUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -48,13 +48,13 @@ val appModule = module {
 
     // UseCases
     factory { DelayUseCase() }
-    factory { CreateProfileUseCase() }
+    factory { CreateProfileUseCase(get(), get()) }
     factory { CreateAccountUseCase(get(), get(), get(), get()) }
     factory { LoginUseCase(get(), get(), get()) }
     factory { BiometricPermissionUseCase(get()) }
 
     // Repositories
-    factory { UserAccountRepository(get()) }
+    factory { UserAccountRepository(get(), get()) }
     factory { AppPreferenceRepository(get()) }
 
     // Client

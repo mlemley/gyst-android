@@ -1,9 +1,12 @@
 package app.gyst.repository
 
 import app.gyst.client.model.LoginResponse
+import app.gyst.client.model.UserProfileResponse
 import app.gyst.common.toInstant
 import app.gyst.persistence.dao.UserDao
+import app.gyst.persistence.dao.UserProfileDao
 import app.gyst.persistence.model.User
+import app.gyst.persistence.model.UserProfile
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -20,9 +23,10 @@ class UserAccountRepositoryTest {
 
     private fun createRepository(
         userDao: UserDao = mockk(relaxUnitFun = true) {
-            every { user() } returns null
-        }
-    ): UserAccountRepository = UserAccountRepository(userDao)
+            io.mockk.every { user() } returns null
+        },
+        userProfileDao: UserProfileDao = mockk(relaxUnitFun = true)
+    ): UserAccountRepository = UserAccountRepository(userDao, userProfileDao)
 
     @Test
     fun provides_access_to_user() {
@@ -75,6 +79,35 @@ class UserAccountRepositoryTest {
 
         verify {
             runBlocking { dao.update(user.copy(lastSeen = now)) }
+        }
+    }
+
+    @Test
+    fun saves_user_profile_response_for_user() = runBlocking {
+        val user = User(UUID.randomUUID(), "--email--", true, "--token--", Instant.now(), Instant.now(), Instant.now())
+        val userProfileResponse =
+            UserProfileResponse(UUID.randomUUID(), user.id, "--first-name--", "--last-name--", Instant.now(), Instant.now())
+        val userDao: UserDao = mockk {
+            every { byId(user.id.toString()) } returns user
+        }
+        val userProfileDao: UserProfileDao = mockk(relaxUnitFun = true)
+        val repository = createRepository(userDao, userProfileDao)
+
+        repository.saveUserProfile(userProfileResponse)
+
+        verify {
+            runBlocking {
+                userProfileDao.saveUserProfile(
+                    UserProfile(
+                        userProfileResponse.id,
+                        userProfileResponse.userId,
+                        userProfileResponse.firstName,
+                        userProfileResponse.lastName,
+                        userProfileResponse.createAt,
+                        userProfileResponse.updatedAt
+                    )
+                )
+            }
         }
     }
 }

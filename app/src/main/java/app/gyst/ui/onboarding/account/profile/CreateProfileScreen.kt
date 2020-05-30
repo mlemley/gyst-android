@@ -28,8 +28,9 @@ class CreateProfileScreen : Fragment() {
     val stateObserver: Observer<CreateProfileState> = Observer { state ->
         when (state) {
             CreateProfileState.Initial -> renderInitialState()
-            is CreateProfileState.InvalidInput -> onInvalidInput(state.validationErrors)
+            is CreateProfileState.InvalidInput -> renderInvalidInput(state.validationErrors)
             is CreateProfileState.NavigationTask -> findNavController().navigate(state.direction)
+            CreateProfileState.CreateProfileFailure -> renderProfileFailure()
         }.exhaustive
     }
 
@@ -58,7 +59,7 @@ class CreateProfileScreen : Fragment() {
         }
     }
 
-    private fun onInvalidInput(validationErrors: List<CreateProfileValidationErrors>) {
+    private fun renderInvalidInput(validationErrors: List<CreateProfileValidationErrors>) {
 
         validationErrors.forEach {
             when (it) {
@@ -75,6 +76,10 @@ class CreateProfileScreen : Fragment() {
             }.exhaustive
         }
 
+    }
+
+    private fun renderProfileFailure() {
+        TODO("Not yet implemented")
     }
 }
 
