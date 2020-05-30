@@ -28,7 +28,7 @@
     <string name="login">Login</string>
     <string name="account_login_invalid_credentials_message">Invalid email or password.</string>
     <string name="account_login_failure_message">Could not create account at this time. Please try again later.</string>
-    <string name="login_title">Login to your account</string>
+    <string name="login_title">Log into your account</string>
 
     <!-- Login -->
     <string name="account_login_biometric_failure_message">Could not login with biometrics, please login with username and password.</string>

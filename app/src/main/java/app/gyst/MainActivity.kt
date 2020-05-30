@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import app.gyst.common.hide
+import app.gyst.common.gone
 import app.gyst.common.show
 import app.gyst.databinding.ActivityMainBinding
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.nav_splash_screen -> binder.appbar.hide()
+                R.id.nav_splash_screen -> binder.appbar.gone()
                 else -> binder.appbar.show()
             }
 
