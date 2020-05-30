@@ -12,6 +12,7 @@ import app.gyst.repository.AppPreferenceRepository
 import app.gyst.repository.UserAccountRepository
 import app.gyst.ui.account.login.BiometricPermissionScreenViewModel
 import app.gyst.ui.account.login.LoginScreenViewModel
+import app.gyst.ui.financial.overview.FinancialOverviewViewModel
 import app.gyst.ui.onboarding.account.create.CreateAccountViewModel
 import app.gyst.ui.onboarding.account.profile.CreateProfileUseCase
 import app.gyst.ui.onboarding.account.profile.CreateProfileViewModel
@@ -43,6 +44,7 @@ val appModule = module {
     viewModel { CreateAccountViewModel(get(), get(), get()) }
     viewModel { LoginScreenViewModel(get(), get(), get()) }
     viewModel { BiometricPermissionScreenViewModel(get()) }
+    viewModel { FinancialOverviewViewModel() }
 
     // UseCases
     factory { DelayUseCase() }

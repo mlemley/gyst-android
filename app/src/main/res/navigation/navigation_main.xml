@@ -14,6 +14,9 @@
             app:destination="@id/nav_onboarding_create_account"
             app:popUpTo="@id/navigation_main"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_nav_splash_screen_to_nav_financial_overview"
+            app:destination="@id/nav_financial_overview" />
     </fragment>
     <fragment
         android:id="@+id/nav_onboarding_create_account"
@@ -42,6 +45,15 @@
         android:id="@+id/nav_introduction_screen"
         android:label="@string/what_can_we_call_you"
         android:name="app.gyst.ui.onboarding.account.profile.CreateProfileScreen"
-        tools:layout="@layout/fragment_onboarding_create_profile" />
+        tools:layout="@layout/fragment_onboarding_create_profile" >
+        <action
+            android:id="@+id/action_nav_introduction_screen_to_nav_financial_overview"
+            app:destination="@id/nav_financial_overview" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/nav_financial_overview"
+        android:label="@string/financial_overview"
+        android:name="app.gyst.ui.financial.overview.OverViewScreen"
+        tools:layout="@layout/fragment_financial_overview" />
 </navigation>

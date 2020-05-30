@@ -45,5 +45,6 @@
     <!-- BioMetrics Onboarding Permission -->
     <string name="allow_biometric_login">Allow BioMetric Login</string>
     <string name="enable_biometrics">Enable BioMetrics</string>
+    <string name="financial_overview">Your Financial Picture</string>
 
 </resources>
