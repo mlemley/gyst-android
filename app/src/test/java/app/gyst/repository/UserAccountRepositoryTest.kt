@@ -79,6 +79,37 @@ class UserAccountRepositoryTest {
     }
 
     @Test
+    fun cache_account__caches_account_with_profile__when_profile_provided() = runBlocking {
+        val userDao: UserDao = mockk(relaxed = true)
+        val userProfileDao: UserProfileDao = mockk(relaxed = true)
+        val repository = createRepository(userDao = userDao, userProfileDao = userProfileDao)
+        val userId = UUID.randomUUID()
+        val loginResponse = LoginResponse(
+            userId,
+            "foo@bar.com",
+            true,
+            Instant.now(),
+            Instant.now(),
+            "--access-token--",
+            profile = UserProfileResponse(
+                UUID.randomUUID(),
+                userId,
+                "--first-name--",
+                "--last-name--",
+                Instant.now(),
+                Instant.now()
+            )
+        )
+
+        repository.cacheAccount(loginResponse)
+
+        verify {
+            runBlocking { userDao.saveUserAccount(any()) }
+            runBlocking { userProfileDao.saveUserProfile(any()) }
+        }
+    }
+
+    @Test
     fun updates_last_seen() = runBlocking {
         val then = 1590590375821.toInstant()
         val now = Instant.now()

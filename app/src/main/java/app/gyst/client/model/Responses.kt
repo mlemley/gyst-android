@@ -16,7 +16,8 @@ data class LoginResponse(
     @SerializedName("updated_at")
     val updatedAt: Instant,
     @SerializedName("access_token")
-    val accessToken: String
+    val accessToken: String,
+    val profile: UserProfileResponse? = null
 )
 
 @Parcelize

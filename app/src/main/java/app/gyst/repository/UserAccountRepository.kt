@@ -25,6 +25,9 @@ class UserAccountRepository(
 
     suspend fun cacheAccount(loginResponse: LoginResponse) {
         userDao.saveUserAccount(loginResponse.asUserModel())
+        loginResponse.profile?.let {
+            saveUserProfile(it)
+        }
     }
 
     suspend fun updateLastSeen(user: User) {

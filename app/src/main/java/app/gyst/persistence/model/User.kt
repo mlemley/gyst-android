@@ -38,8 +38,8 @@ data class UserWithProfile(
     val userId: UUID,
     val profileId: UUID?,
     val email: String = "",
-    val firstName: String = "",
-    val lastName: String = ""
+    val firstName: String? = "",
+    val lastName: String? = ""
 )
 
 val UserWithProfile.hasProfile: Boolean get() = profileId != null

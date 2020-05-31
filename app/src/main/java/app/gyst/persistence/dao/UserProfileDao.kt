@@ -9,6 +9,13 @@ abstract class UserProfileDao : BaseDao<UserProfile>() {
 
     @Query(
         """
+        select * from user_profile where userId=:uuid limit 1
+    """
+    )
+    abstract fun byUserId(uuid: String): UserProfile?
+
+    @Query(
+        """
         select * from user_profile where id=:uuid limit 1
     """
     )
