@@ -17,7 +17,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var binder: ActivityMainBinding
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val topLevelDestinationIds = setOf(R.id.nav_onboarding_create_account, R.id.nav_introduction_screen, R.id.nav_login_screen)
+    val topLevelDestinationIds =
+        setOf(R.id.nav_onboarding_create_account, R.id.nav_introduction_screen, R.id.nav_login_screen, R.id.nav_financial_overview)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
