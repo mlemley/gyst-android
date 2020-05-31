@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import app.gyst.common.exhaustive
+import app.gyst.common.navigateWithDirections
 import app.gyst.databinding.FragmentSplashBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -27,7 +27,7 @@ class SplashScreen : Fragment() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val stateObserver: Observer<SplashScreenState> = Observer {
         when (it) {
-            is SplashScreenState.NavigationTask -> findNavController().navigate(it.direction)
+            is SplashScreenState.NavigationTask -> navigateWithDirections(it.direction)
             SplashScreenState.Initial -> {
                 //do nothing
             }

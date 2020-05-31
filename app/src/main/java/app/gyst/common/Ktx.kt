@@ -8,8 +8,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import androidx.navigation.ActionOnlyNavDirections
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -110,5 +113,13 @@ fun String.toInstant(): Instant? {
     return LocalDateTime.parse(this, formatter).toInstant(UTC)
 }
 
-
 fun Int.asNavDirection(): NavDirections = ActionOnlyNavDirections( this)
+
+fun Fragment.navigateWithDirections(navDirections: NavDirections, navOptions: NavOptions? = null) {
+    with(findNavController()) {
+        navigate(
+            navDirections,
+            navOptions
+        )
+    }
+}

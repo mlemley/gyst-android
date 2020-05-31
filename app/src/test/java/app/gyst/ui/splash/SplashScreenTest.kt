@@ -3,14 +3,13 @@ package app.gyst.ui.splash
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
-import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.gyst.app.loadModules
+import app.gyst.app.verifyNavigation
+import app.gyst.app.withMockedNavigation
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -50,22 +49,15 @@ class SplashScreenTest {
 
     @Test
     fun navigates_to_destination_when_instructed() {
-        val navController: NavController = mockk(relaxed = true)
         val navDirections = SplashScreenDirections.actionNavSplashScreenToNavOnboardingCreateAccount()
         createScenario().onFragment { fragment ->
-            fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
-                if (viewLifecycleOwner != null) {
-                    // The fragment’s view has just been created
-                    Navigation.setViewNavController(fragment.requireView(), navController)
-                }
-            }
-
+            val navController: NavController = fragment.withMockedNavigation()
             fragment.stateObserver.onChanged(SplashScreenState.NavigationTask(navDirections))
 
-            val slot = slot<NavDirections>()
-            verify { navController.navigate(capture(slot)) }
-
-            assertThat(slot.captured.actionId).isEqualTo(navDirections.actionId)
+            navController.verifyNavigation{ directions, options ->
+                assertThat(directions.actionId).isEqualTo(navDirections.actionId)
+                assertThat(options).isNull()
+            }
         }
     }
 }

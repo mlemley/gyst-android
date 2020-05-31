@@ -71,7 +71,9 @@ class CreateProfileViewModelTest {
         assertThat(actualStates).isEqualTo(
             listOf(
                 CreateProfileState.InvalidInput(listOf(CreateProfileValidationErrors.FirstNameEmpty)),
-                CreateProfileState.NavigationTask(CreateProfileScreenDirections.actionNavIntroductionScreenToNavFinancialOverview()),
+                CreateProfileState.NavigationTask(
+                    CreateProfileScreenDirections.actionNavIntroductionScreenToNavFinancialOverview()
+                ),
                 CreateProfileState.CreateProfileFailure
             )
         )

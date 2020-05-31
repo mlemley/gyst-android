@@ -63,7 +63,9 @@ class CreateProfileViewModel(
                     is CreateProfileResults.InputInvalid -> CreateProfileState.InvalidInput(
                         result.validationErrors
                     )
-                    CreateProfileResults.ProfileCreated -> CreateProfileState.NavigationTask(CreateProfileScreenDirections.actionNavIntroductionScreenToNavFinancialOverview())
+                    CreateProfileResults.ProfileCreated -> CreateProfileState.NavigationTask(
+                        CreateProfileScreenDirections.actionNavIntroductionScreenToNavFinancialOverview()
+                    )
                     CreateProfileResults.CreateProfileFailed -> CreateProfileState.CreateProfileFailure
                 }.exhaustive
             }
