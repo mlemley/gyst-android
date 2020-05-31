@@ -5,10 +5,12 @@ import app.gyst.common.asNavDirection
 import app.gyst.common.viewmodel.Action
 import app.gyst.common.viewmodel.Result
 import app.gyst.common.viewmodel.State
+import app.gyst.repository.UserAccountRepository
 import app.gyst.viewmodel.usecases.BiometricPermissionActions
 import app.gyst.viewmodel.usecases.BiometricPermissionCollectedResult
 import app.gyst.viewmodel.usecases.BiometricPermissionUseCase
 import com.google.common.truth.Truth.assertThat
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -16,14 +18,16 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
+import java.util.*
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 class BiometricPermissionScreenViewModelTest {
 
     private fun createViewModel(
-        biometricPermissionUseCase: BiometricPermissionUseCase = mockk(relaxed = true)
-    ): BiometricPermissionScreenViewModel = BiometricPermissionScreenViewModel(biometricPermissionUseCase)
+        biometricPermissionUseCase: BiometricPermissionUseCase = mockk(relaxed = true),
+        userAccountRepository: UserAccountRepository = mockk(relaxed = true)
+    ): BiometricPermissionScreenViewModel = BiometricPermissionScreenViewModel(biometricPermissionUseCase, userAccountRepository)
 
     @Test
     fun provides_list_of_used_use_cases() {
@@ -61,10 +65,16 @@ class BiometricPermissionScreenViewModelTest {
 
     @Test
     fun updates_state() = runBlocking {
-        val viewModel = createViewModel()
+        val userAccountRepository: UserAccountRepository = mockk {
+            every { userWithProfile } returns mockk {
+                every { profileId } returns null andThen UUID.randomUUID()
+            }
+        }
+        val viewModel = createViewModel(userAccountRepository = userAccountRepository)
         val initialState = viewModel.makeInitState()
 
         val results = listOf<Result>(
+            BiometricPermissionCollectedResult(true),
             BiometricPermissionCollectedResult(true)
         )
 
@@ -77,8 +87,10 @@ class BiometricPermissionScreenViewModelTest {
 
         assertThat(states).isEqualTo(
             listOf(
-                BiometricPermissionScreenState.Navigate(R.id.nav_introduction_screen.asNavDirection())
+                BiometricPermissionScreenState.Navigate(R.id.nav_introduction_screen.asNavDirection()),
+                BiometricPermissionScreenState.Navigate(R.id.nav_financial_overview.asNavDirection())
             )
         )
     }
+
 }

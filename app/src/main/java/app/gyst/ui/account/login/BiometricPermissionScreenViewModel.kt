@@ -5,6 +5,8 @@ import app.gyst.R
 import app.gyst.common.asNavDirection
 import app.gyst.common.exhaustive
 import app.gyst.common.viewmodel.*
+import app.gyst.persistence.model.hasProfile
+import app.gyst.repository.UserAccountRepository
 import app.gyst.viewmodel.usecases.BiometricPermissionActions
 import app.gyst.viewmodel.usecases.BiometricPermissionCollectedResult
 import app.gyst.viewmodel.usecases.BiometricPermissionUseCase
@@ -21,13 +23,14 @@ sealed class BiometricPermissionScreenEvents : Event {
 
 sealed class BiometricPermissionScreenState : State {
     object Initial : BiometricPermissionScreenState()
-    data class Navigate(val directions: NavDirections): BiometricPermissionScreenState()
+    data class Navigate(val directions: NavDirections) : BiometricPermissionScreenState()
 }
 
 @FlowPreview
 @ExperimentalCoroutinesApi
 class BiometricPermissionScreenViewModel(
-    biometricPermissionUseCase: BiometricPermissionUseCase
+    biometricPermissionUseCase: BiometricPermissionUseCase,
+    private val userAccountRepository: UserAccountRepository
 ) : BaseViewModel<BiometricPermissionScreenEvents, BiometricPermissionScreenState>() {
     override val useCases: List<UseCase> = listOf(biometricPermissionUseCase)
 
@@ -43,7 +46,10 @@ class BiometricPermissionScreenViewModel(
     }
 
     override fun BiometricPermissionScreenState.plus(result: Result): BiometricPermissionScreenState = when (result) {
-        is BiometricPermissionCollectedResult -> BiometricPermissionScreenState.Navigate(R.id.nav_introduction_screen.asNavDirection())
+        is BiometricPermissionCollectedResult -> BiometricPermissionScreenState.Navigate(
+            if (userAccountRepository.userWithProfile?.hasProfile == true) R.id.nav_financial_overview.asNavDirection()
+            else R.id.nav_introduction_screen.asNavDirection()
+        )
         else -> this
     }
 

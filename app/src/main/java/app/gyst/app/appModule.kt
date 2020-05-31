@@ -43,7 +43,7 @@ val appModule = module {
     viewModel { CreateProfileViewModel(get()) }
     viewModel { CreateAccountViewModel(get(), get(), get()) }
     viewModel { LoginScreenViewModel(get(), get(), get(), get()) }
-    viewModel { BiometricPermissionScreenViewModel(get()) }
+    viewModel { BiometricPermissionScreenViewModel(get(), get()) }
     viewModel { FinancialOverviewViewModel() }
 
     // UseCases
