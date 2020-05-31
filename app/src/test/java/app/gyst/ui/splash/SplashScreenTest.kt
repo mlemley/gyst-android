@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.gyst.app.loadModules
 import app.gyst.app.verifyNavigation
 import app.gyst.app.withMockedNavigation
+import app.gyst.shadows.ShadowSnackbar
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -17,6 +18,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import org.robolectric.annotation.Config
 
 @FlowPreview
 @ExperimentalCoroutinesApi

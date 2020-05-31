@@ -8,9 +8,9 @@ import android.view.inputmethod.EditorInfo
 import androidx.annotation.VisibleForTesting
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import app.gyst.R
+import app.gyst.app.revertWithSnackBarMessage
 import app.gyst.common.exhaustive
 import app.gyst.common.navigateWithDirections
 import app.gyst.common.onImeEvent
@@ -40,11 +40,6 @@ class CreateProfileScreen : Fragment() {
         }.exhaustive
     }
 
-    private fun navigateToDirection(state: CreateProfileState.NavigationTask) {
-        findNavController().navigate(state.direction)
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +51,7 @@ class CreateProfileScreen : Fragment() {
     }
 
     private fun processNext() {
+        binder.next.startAnimation()
         binder.firstNameLayout.error = null
         binder.lastNameLayout.error = null
         createProfileViewModel.dispatchEvent(
@@ -67,6 +63,7 @@ class CreateProfileScreen : Fragment() {
     }
 
     private fun renderInitialState() {
+        binder.next.revertAnimation()
         with(binder) {
             next.setOnClickListener { processNext() }
             lastName.onImeEvent(EditorInfo.IME_ACTION_DONE) { processNext() }
@@ -74,6 +71,7 @@ class CreateProfileScreen : Fragment() {
     }
 
     private fun renderInvalidInput(validationErrors: List<CreateProfileValidationErrors>) {
+        binder.next.revertAnimation()
         validationErrors.forEach {
             when (it) {
                 CreateProfileValidationErrors.FirstNameEmpty -> {
@@ -92,7 +90,7 @@ class CreateProfileScreen : Fragment() {
     }
 
     private fun renderProfileFailure() {
-        TODO("Not yet implemented")
+        binder.next.revertWithSnackBarMessage(R.string.account_profile_creation_failure_message)
     }
 }
 

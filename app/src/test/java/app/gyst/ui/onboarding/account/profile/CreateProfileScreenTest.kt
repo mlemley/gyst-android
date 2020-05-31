@@ -9,6 +9,7 @@ import app.gyst.app.loadModules
 import app.gyst.app.verifyNavigation
 import app.gyst.app.withMockedNavigation
 import app.gyst.common.asNavDirection
+import app.gyst.shadows.ShadowSnackbar
 import app.gyst.ui.onboarding.account.profile.CreateProfileValidationErrors.FirstNameEmpty
 import app.gyst.ui.onboarding.account.profile.CreateProfileValidationErrors.LastNameEmpty
 import com.google.common.truth.Truth.assertThat
@@ -21,6 +22,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import org.robolectric.annotation.Config
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -159,6 +161,16 @@ class CreateProfileScreenTest {
                 assertThat(options.popUpTo).isEqualTo(R.id.navigation_main)
                 assertThat(options.isPopUpToInclusive).isTrue()
             }
+        }
+    }
+
+    @Test
+    @Config(shadows = [ShadowSnackbar::class])
+    fun renders_failure() {
+        createScenario().onFragment { fragment ->
+            fragment.stateObserver.onChanged(CreateProfileState.CreateProfileFailure)
+
+            assertThat(ShadowSnackbar.getTextOfLatestSnackbar()).isEqualTo(fragment.getString(R.string.account_profile_creation_failure_message))
         }
     }
 }

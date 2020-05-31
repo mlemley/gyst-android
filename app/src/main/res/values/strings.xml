@@ -12,18 +12,20 @@
     <string name="invalid_email">The email provided is invalid.</string>
     <string name="account_creation_failure_message">Could not create account at this time. Please try again later.</string>
     <string name="account_creation_conflict_failure_message">Email already registered with Gyst, Please request password reset.</string>
-
-    <!-- Create Profile -->
-    <string name="what_can_we_call_you">What can we call you?</string>
-    <string name="first_name_empty_error">First name is required.</string>
-    <string name="last_name_empty_error">Last name is required.</string>
     <string name="password_rules_upper">A</string>
     <string name="password_rules_lower">a</string>
     <string name="password_rules_digits">#</string>
     <string name="password_rules_special">%s</string>
     <string name="password_rules_size">%s-%s</string>
 
+
     <!-- Create Profile -->
+    <string name="what_can_we_call_you">What can we call you?</string>
+    <string name="first_name_empty_error">First name is required.</string>
+    <string name="last_name_empty_error">Last name is required.</string>
+    <string name="account_profile_creation_failure_message">Could not create profile at this time. Please try again later.</string>
+
+    <!-- Create Account -->
 
     <string name="login">Login</string>
     <string name="account_login_invalid_credentials_message">Invalid email or password.</string>
@@ -45,6 +47,8 @@
     <!-- BioMetrics Onboarding Permission -->
     <string name="allow_biometric_login">Allow BioMetric Login</string>
     <string name="enable_biometrics">Enable BioMetrics</string>
+
+    <!-- Financial Overview -->
     <string name="financial_overview">Your Financial Picture</string>
 
 </resources>
