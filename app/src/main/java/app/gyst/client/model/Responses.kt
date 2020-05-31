@@ -22,6 +22,7 @@ data class LoginResponse(
 @Parcelize
 data class UserProfileResponse(
     val id: UUID,
+    @SerializedName("user_id")
     val userId: UUID,
 
     @SerializedName("first_name")
@@ -31,7 +32,7 @@ data class UserProfileResponse(
     val lastName: String,
 
     @SerializedName("created_at")
-    val createAt: Instant,
+    val createdAt: Instant,
 
     @SerializedName("updated_at")
     val updatedAt: Instant

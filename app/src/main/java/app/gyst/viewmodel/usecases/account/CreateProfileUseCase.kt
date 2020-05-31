@@ -24,7 +24,7 @@ sealed class CreateProfileActions : Action {
 sealed class CreateProfileResults : Result {
     data class InputInvalid(val validationErrors: List<CreateProfileValidationErrors>) :
         CreateProfileResults()
-
+    object CreatingProfile: CreateProfileResults()
     object ProfileCreated : CreateProfileResults()
     object CreateProfileFailed : CreateProfileResults()
 }
@@ -38,6 +38,7 @@ class CreateProfileUseCase(
 
     override fun handleAction(action: Action): Flow<Result> = channelFlow {
         if (action is CreateProfileActions.ProcessUsersName) {
+            send(CreateProfileResults.CreatingProfile)
             mutableListOf<CreateProfileValidationErrors>().apply {
                 if (action.firstName.isEmpty()) add(CreateProfileValidationErrors.FirstNameEmpty)
                 if (action.lastName.isEmpty()) add(CreateProfileValidationErrors.LastNameEmpty)

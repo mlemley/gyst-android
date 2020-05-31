@@ -59,7 +59,8 @@ class CreateProfileViewModelTest {
         val results = listOf<Result>(
             CreateProfileResults.InputInvalid(listOf(CreateProfileValidationErrors.FirstNameEmpty)),
             CreateProfileResults.ProfileCreated,
-            CreateProfileResults.CreateProfileFailed
+            CreateProfileResults.CreateProfileFailed,
+            CreateProfileResults.CreatingProfile
         )
 
         with(viewModel) {
@@ -74,7 +75,8 @@ class CreateProfileViewModelTest {
                 CreateProfileState.NavigationTask(
                     CreateProfileScreenDirections.actionNavIntroductionScreenToNavFinancialOverview()
                 ),
-                CreateProfileState.CreateProfileFailure
+                CreateProfileState.CreateProfileFailure,
+                CreateProfileState.CreatingProfile
             )
         )
     }

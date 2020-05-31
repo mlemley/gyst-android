@@ -12,6 +12,7 @@ import androidx.navigation.navOptions
 import app.gyst.R
 import app.gyst.app.revertWithSnackBarMessage
 import app.gyst.common.exhaustive
+import app.gyst.common.hideKeyBoard
 import app.gyst.common.navigateWithDirections
 import app.gyst.common.onImeEvent
 import app.gyst.databinding.FragmentOnboardingCreateProfileBinding
@@ -37,6 +38,7 @@ class CreateProfileScreen : Fragment() {
                 state.direction,
                 navOptions { popUpTo(R.id.navigation_main) { inclusive = true } })
             CreateProfileState.CreateProfileFailure -> renderProfileFailure()
+            CreateProfileState.CreatingProfile -> binder.next.startAnimation()
         }.exhaustive
     }
 
@@ -51,9 +53,10 @@ class CreateProfileScreen : Fragment() {
     }
 
     private fun processNext() {
-        binder.next.startAnimation()
         binder.firstNameLayout.error = null
         binder.lastNameLayout.error = null
+        binder.lastName.hideKeyBoard()
+        binder.firstName.hideKeyBoard()
         createProfileViewModel.dispatchEvent(
             CreateProfileEvents.OnProcessNext(
                 binder.firstName.text.toString(),

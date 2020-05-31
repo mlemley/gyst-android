@@ -8,6 +8,7 @@ import app.gyst.common.viewmodel.Result
 import app.gyst.repository.UserAccountRepository
 import app.gyst.ui.onboarding.account.profile.CreateProfileValidationErrors.FirstNameEmpty
 import app.gyst.ui.onboarding.account.profile.CreateProfileValidationErrors.LastNameEmpty
+import app.gyst.viewmodel.usecases.account.CreateProfileResults.*
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -15,6 +16,7 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
+import org.junit.Ignore
 import org.junit.Test
 import org.threeten.bp.Instant
 import retrofit2.HttpException
@@ -41,15 +43,15 @@ class CreateProfileUseCaseTest {
         val results = mutableListOf<Result>()
 
         useCase.handleAction(CreateProfileActions.ProcessUsersName("", "")).toList(results)
-        assertThat(results).isEqualTo(listOf(CreateProfileResults.InputInvalid(listOf(FirstNameEmpty, LastNameEmpty))))
+        assertThat(results).isEqualTo(listOf(CreatingProfile, InputInvalid(listOf(FirstNameEmpty, LastNameEmpty))))
 
         results.clear()
         useCase.handleAction(CreateProfileActions.ProcessUsersName("Foo", "")).toList(results)
-        assertThat(results).isEqualTo(listOf(CreateProfileResults.InputInvalid(listOf(LastNameEmpty))))
+        assertThat(results).isEqualTo(listOf(CreatingProfile, InputInvalid(listOf(LastNameEmpty))))
 
         results.clear()
         useCase.handleAction(CreateProfileActions.ProcessUsersName("", "Bar")).toList(results)
-        assertThat(results).isEqualTo(listOf(CreateProfileResults.InputInvalid(listOf(FirstNameEmpty))))
+        assertThat(results).isEqualTo(listOf(CreatingProfile, InputInvalid(listOf(FirstNameEmpty))))
     }
 
     @Test
@@ -67,12 +69,13 @@ class CreateProfileUseCaseTest {
 
         useCase.handleAction(CreateProfileActions.ProcessUsersName(firstName, lastName)).toList(results)
 
-        assertThat(results).isEqualTo(listOf(CreateProfileResults.ProfileCreated))
+        assertThat(results).isEqualTo(listOf(CreatingProfile, ProfileCreated))
         verify {
             runBlocking { userAccountRepository.saveUserProfile(userProfileResponse) }
         }
     }
 
+    @Ignore
     @Test
     fun handle_action__updates_profile__when_conflict() {
         TODO("Not yet implemented")
@@ -102,6 +105,6 @@ class CreateProfileUseCaseTest {
 
         useCase.handleAction(CreateProfileActions.ProcessUsersName(firstName, lastName)).toList(results)
 
-        assertThat(results).isEqualTo(listOf(CreateProfileResults.CreateProfileFailed))
+        assertThat(results).isEqualTo(listOf(CreatingProfile, CreateProfileFailed))
     }
 }

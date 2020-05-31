@@ -5,7 +5,9 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-class GystClientInterceptor : Interceptor {
+class GystClientInterceptor(
+    private val sessionManager: SessionManager
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         return chain.proceed(signRequest(chain.request()))
@@ -13,14 +15,7 @@ class GystClientInterceptor : Interceptor {
 
     private fun signRequest(request: Request): Request {
         val builder = request.newBuilder()
-/*
-        when (request.method) {
-            "POST" -> {
-                val json = JsonParser.parseString(request.body?.asString ?: "{}").asJsonObject
-                builder.post(json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull()))
-            }
-        }
-*/
+        sessionManager.authoriseRequest(builder)
         return builder.build().also {
             it.log()
         }

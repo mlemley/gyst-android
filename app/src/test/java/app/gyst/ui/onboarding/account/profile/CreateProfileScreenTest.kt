@@ -158,8 +158,8 @@ class CreateProfileScreenTest {
 
             navController.verifyNavigation { directions, options ->
                 assertThat(directions.actionId).isEqualTo(navDirections.actionId)
-                assertThat(options.popUpTo).isEqualTo(R.id.navigation_main)
-                assertThat(options.isPopUpToInclusive).isTrue()
+                assertThat(options?.popUpTo).isEqualTo(R.id.navigation_main)
+                assertThat(options?.isPopUpToInclusive).isTrue()
             }
         }
     }

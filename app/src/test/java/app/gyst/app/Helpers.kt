@@ -35,7 +35,7 @@ fun Fragment.withMockedNavigation():NavController {
     return navController
 }
 
-fun NavController.verifyNavigation(verificationClosure: (directions: NavDirections, options: NavOptions) -> Unit) {
+fun NavController.verifyNavigation(verificationClosure: (directions: NavDirections, options: NavOptions?) -> Unit) {
     val directionSlot = slot<NavDirections>()
     val optionsSlot = slot<NavOptions>()
     verify {

@@ -59,7 +59,7 @@ val appModule = module {
 
     // Client
     single(named("GystAPIBaseRoute")) { BuildConfig.GYST_API_BASE_ROUTE }
-    factory { GystClientInterceptor() }
+    factory { GystClientInterceptor(get()) }
     factory { gystClient(get(named("GystAPIBaseRoute")), get<GystClientInterceptor>()) }
 }
 

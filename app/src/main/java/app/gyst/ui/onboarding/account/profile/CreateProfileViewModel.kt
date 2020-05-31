@@ -20,6 +20,7 @@ sealed class CreateProfileEvents : Event {
 
 sealed class CreateProfileState : State {
     object Initial : CreateProfileState()
+    object CreatingProfile: CreateProfileState()
     data class InvalidInput(val validationErrors: List<CreateProfileValidationErrors>) :
         CreateProfileState()
 
@@ -67,6 +68,8 @@ class CreateProfileViewModel(
                         CreateProfileScreenDirections.actionNavIntroductionScreenToNavFinancialOverview()
                     )
                     CreateProfileResults.CreateProfileFailed -> CreateProfileState.CreateProfileFailure
+                    CreateProfileResults.CreatingProfile -> CreateProfileState.CreatingProfile
+
                 }.exhaustive
             }
             else -> this
