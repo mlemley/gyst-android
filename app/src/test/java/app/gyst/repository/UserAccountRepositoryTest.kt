@@ -23,7 +23,7 @@ class UserAccountRepositoryTest {
 
     private fun createRepository(
         userDao: UserDao = mockk(relaxUnitFun = true) {
-            io.mockk.every { user() } returns null
+            every { user() } returns null
         },
         userProfileDao: UserProfileDao = mockk(relaxUnitFun = true)
     ): UserAccountRepository = UserAccountRepository(userDao, userProfileDao)
@@ -38,6 +38,19 @@ class UserAccountRepositoryTest {
 
         assertThat(repository.userAccount).isNull()
         assertThat(repository.userAccount).isNotNull()
+    }
+
+    @Test
+    fun provides_access_to_user_with_profile() {
+        val user = User(UUID.randomUUID(), "", true, "", Instant.now(), Instant.now())
+        val userDao: UserDao = mockk() {
+            every { user() } returns user
+            every { userWithProfileByUserId(user.id.toString()) } returns mockk()
+        }
+
+        val repository = createRepository(userDao = userDao)
+
+        assertThat(repository.userWithProfile).isNotNull()
     }
 
     @Test
@@ -103,11 +116,12 @@ class UserAccountRepositoryTest {
                         userProfileResponse.userId,
                         userProfileResponse.firstName,
                         userProfileResponse.lastName,
-                        userProfileResponse.createAt,
+                        userProfileResponse.createdAt,
                         userProfileResponse.updatedAt
                     )
                 )
             }
         }
     }
+
 }

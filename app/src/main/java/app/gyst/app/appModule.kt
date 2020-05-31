@@ -42,7 +42,7 @@ val appModule = module {
     viewModel { SplashScreenViewModel(get(), SplashScreenDelay) }
     viewModel { CreateProfileViewModel(get()) }
     viewModel { CreateAccountViewModel(get(), get(), get()) }
-    viewModel { LoginScreenViewModel(get(), get(), get()) }
+    viewModel { LoginScreenViewModel(get(), get(), get(), get()) }
     viewModel { BiometricPermissionScreenViewModel(get()) }
     viewModel { FinancialOverviewViewModel() }
 

@@ -6,7 +6,9 @@ import app.gyst.biometrics.Biometrics
 import app.gyst.common.asNavDirection
 import app.gyst.common.exhaustive
 import app.gyst.common.viewmodel.*
+import app.gyst.persistence.model.hasProfile
 import app.gyst.repository.AppPreferenceRepository
+import app.gyst.repository.UserAccountRepository
 import app.gyst.viewmodel.usecases.account.LoginAction
 import app.gyst.viewmodel.usecases.account.LoginResults
 import app.gyst.viewmodel.usecases.account.LoginUseCase
@@ -34,8 +36,9 @@ sealed class LoginScreenEvents : Event {
 @ExperimentalCoroutinesApi
 class LoginScreenViewModel(
     loginUseCase: LoginUseCase,
-    val biometrics: Biometrics,
-    val appPreferenceRepository: AppPreferenceRepository
+    private val biometrics: Biometrics,
+    private val appPreferenceRepository: AppPreferenceRepository,
+    private val userAccountRepository: UserAccountRepository
 ) : BaseViewModel<LoginScreenEvents, LoginScreenState>() {
 
     override val useCases: List<UseCase> = listOf(loginUseCase)
@@ -69,5 +72,9 @@ class LoginScreenViewModel(
     private fun nextNavigationTarget(): NavDirections =
         if (biometrics.canAuthenticate() && !appPreferenceRepository.hasCompletedBioMetricPrompt)
             R.id.nav_biometric_permission.asNavDirection()
-        else R.id.nav_introduction_screen.asNavDirection()
+        else if (userAccountRepository.userWithProfile?.hasProfile == true)  {
+            R.id.nav_financial_overview.asNavDirection()
+        } else {
+            R.id.nav_introduction_screen.asNavDirection()
+        }
 }

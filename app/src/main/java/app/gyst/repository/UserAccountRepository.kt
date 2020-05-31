@@ -8,6 +8,7 @@ import app.gyst.persistence.dao.UserDao
 import app.gyst.persistence.dao.UserProfileDao
 import app.gyst.persistence.model.User
 import app.gyst.persistence.model.UserProfile
+import app.gyst.persistence.model.UserWithProfile
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.threeten.bp.Instant
 
@@ -19,8 +20,8 @@ class UserAccountRepository(
 ) {
 
     val userAccount: User? get() = userDao.user()
+    val userWithProfile: UserWithProfile? get() = userAccount?.let { userDao.userWithProfileByUserId(it.id.toString()) }
     val hasAccount: Boolean get() = userDao.user() != null
-
 
     suspend fun cacheAccount(loginResponse: LoginResponse) {
         userDao.saveUserAccount(loginResponse.asUserModel())

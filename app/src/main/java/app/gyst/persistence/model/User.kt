@@ -30,3 +30,16 @@ data class User(
     val updatedAt: Instant,
     val lastSeen: Instant = Instant.now()
 )
+
+@TypeConverters(
+    UuidConverter::class
+)
+data class UserWithProfile(
+    val userId: UUID,
+    val profileId: UUID?,
+    val email: String = "",
+    val firstName: String = "",
+    val lastName: String = ""
+)
+
+val UserWithProfile.hasProfile: Boolean get() = profileId != null

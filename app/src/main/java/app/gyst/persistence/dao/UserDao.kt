@@ -3,6 +3,7 @@ package app.gyst.persistence.dao
 import androidx.room.Dao
 import androidx.room.Query
 import app.gyst.persistence.model.User
+import app.gyst.persistence.model.UserWithProfile
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.intellij.lang.annotations.Language
 
@@ -18,6 +19,23 @@ abstract class UserDao : BaseDao<User>() {
     """
     )
     abstract fun user(): User?
+
+    @Query(
+        """
+            select
+                   u.id userId,
+                   up.id profileId,
+                   u.email email,
+                   up.firstName firstName,
+                   up.lastName lastName
+            from user u
+            left join user_profile up
+            on u.id = up.userId
+            where u.id = :uuid
+            limit 1
+        """
+    )
+    abstract fun userWithProfileByUserId(uuid: String): UserWithProfile?
 
     @Query("select * from user where id=:uuid limit 1")
     abstract fun byId(uuid: String): User?

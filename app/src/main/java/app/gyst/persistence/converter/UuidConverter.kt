@@ -7,7 +7,7 @@ import java.util.*
 object UuidConverter {
     @TypeConverter
     @JvmStatic
-    fun toUUID(id:String):UUID = UUID.fromString(id)
+    fun toUUID(id:String?):UUID? = if(id == null) null else UUID.fromString(id)
 
     @TypeConverter
     @JvmStatic
